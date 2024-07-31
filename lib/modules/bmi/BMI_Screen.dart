@@ -1,3 +1,4 @@
+/*
 import 'dart:math';
 
 import 'package:first_app/modules/bmi_result/BMI_Result_Screen.dart';
@@ -339,3 +340,4 @@ class _BmiScreenState extends State<BmiScreen> {
     );
   }
 }
+*/

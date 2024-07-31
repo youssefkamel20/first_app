@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 
 class BmiResultScreen extends StatelessWidget {
@@ -64,3 +65,4 @@ BmiResultScreen({
     );
   }
 }
+*/
