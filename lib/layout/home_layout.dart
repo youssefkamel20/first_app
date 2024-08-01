@@ -25,7 +25,11 @@ class HomeLayout extends StatelessWidget {
     return BlocProvider(
       create: (context) => AppCubit()..createDatabase(),
       child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, AppStates states) {},
+        listener: (BuildContext context, AppStates states) {
+          if(states is AppInsertDatabaseState){
+            Navigator.pop(context);
+          }
+        },
         builder: (BuildContext context, AppStates states) {
           AppCubit cubit = AppCubit.get(context);
 
@@ -68,16 +72,7 @@ class HomeLayout extends StatelessWidget {
                             top: Radius.circular(20),
                           ),
                         ),
-                        child: cubit.tasks.length == 0
-                            ? Center(
-                                child: Text(
-                                'Add New Tasks',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))
-                            : cubit.screens[cubit.currentIndex]),
+                        child: cubit.screens[cubit.currentIndex]),
                   ),
                 ],
               ),
@@ -88,32 +83,17 @@ class HomeLayout extends StatelessWidget {
               onPressed: () {
                 if (cubit.isButtomSheetShown) {
                   if (formKey.currentState!.validate()) {
-                    // insertToDatabase(
-                    //   title: titleController.text,
-                    //   time: timeController.text,
-                    //   date: dateController.text,
-                    // ).then((value) {
-                    //   getDataFromDatabase(database).then((value) {
-                    //     Navigator.pop(context);
-                    //
-                    //     /*setState(() {
-                    //     isButtomSheetShown = false;
-                    //     fabIcon = Icons.edit;
-                    //
-                    //     tasks = value;
-                    //   });*/
-                    //   });
-                    // });
-                  }
-                  ;
+                    cubit.insertToDatabase(
+                        title: titleController.text,
+                        time: timeController.text,
+                        date: dateController.text,
+                    );
+                  };
                 } else {
-                  cubit.isButtomSheetShown = true;
-                  /*setState(() {
-                  getDataFromDatabase(database).then((value){
-                    tasks = value;
-                  });
-                  fabIcon = Icons.add;
-                });*/
+                  cubit.changeBottomSheetState(
+                    icon: Icons.add,
+                    isShow: true,
+                  );
                   scaffoldKey.currentState!
                       .showBottomSheet(
                         (context) {
@@ -191,13 +171,11 @@ class HomeLayout extends StatelessWidget {
                               ),
                             ),
                           );
-                        },
-                      )
-                      .closed
-                      .then((value) {
-                        cubit.isButtomSheetShown = false;
-                        print(Database);
-                        cubit.fabIcon = Icons.edit;
+                        },).closed.then((value) {
+                        cubit.changeBottomSheetState(
+                            icon: Icons.edit,
+                            isShow: false,
+                        );
                       });
                 }
               },

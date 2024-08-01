@@ -18,8 +18,11 @@ class AppCubit extends Cubit<AppStates> {
     DoneTasksScreen(),
     ArchivedTasksScreen(),
   ];
-  List<String> titels = ['Tasks', 'Done', 'Archived'];
-
+  List<String> titels = [
+    'Tasks',
+    'Done',
+    'Archived'
+  ];
   int currentIndex = 0;
   void changeIndex(int index) {
     currentIndex = index;
@@ -27,7 +30,9 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   late Database database;
-  List<Map> tasks = [];
+  List<Map> newTasks = [];
+  List<Map> doneTasks = [];
+  List<Map> archivedTasks = [];
   void createDatabase() {
     openDatabase('todo.db', version: 1, onCreate: (database, version) {
       print('Database is created');
@@ -40,41 +45,88 @@ class AppCubit extends Cubit<AppStates> {
         print('Error is catched on creation of table ${error.toString()}');
       });
     }, onOpen: (database) {
-      getDataFromDatabase(database).then((value) {
-        tasks = value;
-        emit(AppGetDatabaseState());
-      });
+      getDataFromDatabase(database);
     }).then((value) {
       database = value;
       emit(AppCreateDatabaseState());
     });
   }
 
-  Future insertToDatabase({
+
+  insertToDatabase({
     required String title,
     required String time,
     required String date,
   }) async {
-    return await database.transaction((txn) {
-      return txn
-          .rawInsert(
-              'INSERT INTO tasks(title, date, time, status) VALUES("$title", "$time", "$date", "new")')
+    await database.transaction((txn) {
+      return txn.rawInsert(
+          'INSERT INTO tasks(title, date, time, status) VALUES("$title", "$date", "$time", "new")')
           .then((value) {
         print('$value inserted succefully');
+
         emit(AppInsertDatabaseState());
+
+        getDataFromDatabase(database);
+
       }).catchError((error) {
         print('Found error while inserting ${error.toString()}');
       });
     });
   }
 
-  Future<List<Map>> getDataFromDatabase(database) async {
-    return tasks = await database.rawQuery('SELECT * FROM tasks');
+
+  getDataFromDatabase(database) {
+    newTasks = [];
+    doneTasks = [];
+    archivedTasks = [];
+
+    database.rawQuery('SELECT * FROM tasks').then((value) {
+
+      value.forEach((element){
+        if(element['status'] == 'new'){
+          newTasks.add(element);
+        } else if (element['status'] == 'done'){
+          doneTasks.add(element);
+        } else {
+          archivedTasks.add(element);
+        }
+        emit(AppGetDatabaseState());
+      });
+
+    });
   }
+
+  void updateData({
+    required String status,
+    required int id,
+}) {
+    database.rawUpdate(
+        'UPDATE tasks SET status = ? WHERE id = ?',
+        ['$status', '$id',]).then((value) {
+          getDataFromDatabase(database);
+          emit(AppUpdateDatabaseState());
+        });
+  }
+
+  void deleteData({
+    required int id,
+  }) {
+    database.rawDelete('DELETE FROM tasks WHERE id = ?', [id]).then((value) {
+      getDataFromDatabase(database);
+      emit(AppDeleteDatabaseState());
+    });
+  }
+
 
   bool isButtomSheetShown = false;
   IconData fabIcon = Icons.edit;
-
-  void changeBottomSheetState(){}
+  void changeBottomSheetState({
+    required IconData icon,
+    required bool isShow,
+  }){
+    isButtomSheetShown = isShow;
+    fabIcon = icon;
+    emit(AppChangeButtomSheetState());
+  }
 
 }
