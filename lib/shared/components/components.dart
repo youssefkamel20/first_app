@@ -75,7 +75,7 @@ Widget buildTaskItem(Map model, context) => Dismissible(
                 color: Colors.teal,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text('${model['date']}',
+              child: Text('${model['time']}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -99,7 +99,7 @@ Widget buildTaskItem(Map model, context) => Dismissible(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text('${model['time']}',
+              Text('${model['date']}',
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.grey,
