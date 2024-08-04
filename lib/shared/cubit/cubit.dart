@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:first_app/modules/archived_tasks/archived_tasks_screen.dart';
-import 'package:first_app/modules/done_tasks/done_tasks_screen.dart';
-import 'package:first_app/modules/new_tasks/new_tasks_screen.dart';
-import 'package:first_app/shared/components/constants.dart';
+import 'package:first_app/modules/todo_modules/archived_tasks/archived_tasks_screen.dart';
+import 'package:first_app/modules/todo_modules/done_tasks/done_tasks_screen.dart';
+import 'package:first_app/modules/todo_modules/new_tasks/new_tasks_screen.dart';
 import 'package:first_app/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -6,8 +6,6 @@ Widget defaultButton({
   required Color? backGroundColor ,
   required String text,
   required function,
-
-
 })=> Container(
   decoration: BoxDecoration(
     color: backGroundColor,

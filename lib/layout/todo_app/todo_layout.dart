@@ -1,16 +1,9 @@
-import 'package:first_app/modules/archived_tasks/archived_tasks_screen.dart';
-import 'package:first_app/modules/done_tasks/done_tasks_screen.dart';
-import 'package:first_app/modules/new_tasks/new_tasks_screen.dart';
 import 'package:first_app/shared/components/components.dart';
-import 'package:first_app/shared/components/constants.dart';
 import 'package:first_app/shared/cubit/cubit.dart';
 import 'package:first_app/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 class HomeLayout extends StatelessWidget {
   var scaffoldKey = GlobalKey<ScaffoldState>();
