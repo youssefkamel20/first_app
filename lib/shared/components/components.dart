@@ -124,3 +124,60 @@ Widget buildTaskItem(Map model, context) => Dismissible(
     ),
   ),
 );
+
+Widget myDivider() => Padding(
+    padding: EdgeInsets.symmetric(horizontal: 20),
+  child: Container(
+    height: 1,
+    width: double.infinity,
+    color: Colors.grey[400],
+  ),
+);
+
+Widget buildArticleItem(article) =>Padding(
+  padding: const EdgeInsets.all(20.0),
+  child: Row(
+    children: [
+      Container(
+        width: 120,
+        height: 120,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+              image: NetworkImage('${article['urlToImage']}'),
+              fit: BoxFit.cover
+          ),
+        ),
+      ),
+      SizedBox(
+        width: 20,
+      ),
+      Expanded(
+        child: Container(
+          height: 120,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Text('title',
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),),
+              ),
+              Text('2024-08-02T18:43:00Z',
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+) ;

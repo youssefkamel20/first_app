@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primarySwatch: Colors.grey,
           appBarTheme: AppBarTheme(
           actionsIconTheme: IconThemeData(
             size: 35
