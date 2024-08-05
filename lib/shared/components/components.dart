@@ -143,10 +143,11 @@ Widget buildArticleItem(article) =>Padding(
         height: 120,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(
-              image: NetworkImage('${article['urlToImage']}'),
-              fit: BoxFit.cover
-          ),
+          color: Colors.grey,
+          // image: DecorationImage(
+          //     image: NetworkImage('${article['urlToImage'] == null? 'https://www.elbalad.news/UploadCache/libfiles/1066/7/600x338o/460.png' : article['urlToImage']} '),
+          //     fit: BoxFit.cover
+          // ),
         ),
       ),
       SizedBox(
@@ -161,15 +162,15 @@ Widget buildArticleItem(article) =>Padding(
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: Text('title',
-                  maxLines: 4,
+                child: Text('${article['title']}',
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
                   ),),
               ),
-              Text('2024-08-02T18:43:00Z',
+              Text('${article['publishedAt']}',
                 style: TextStyle(
                   color: Colors.grey,
                 ),
